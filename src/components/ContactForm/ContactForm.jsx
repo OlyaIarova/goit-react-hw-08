@@ -1,12 +1,13 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useId } from 'react';
 import * as Yup from 'yup';
-
-import CSS from './ContactForm.module.css';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsOps.js';
+import CSS from './ContactForm.module.css';
+
+import { addContact } from '../../redux/contacts/operations.js';
 
 const userSchema = Yup.object().shape({
+  //конструктор схем для аналізу та перевірки значень
   name: Yup.string()
     .min(3, 'Too Short!')
     .max(50, 'Too Long!')
@@ -28,9 +29,11 @@ const ContactForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(addContact({ id: crypto.randomUUID(), ...values }));
+    // Обробка відправлення форми.
+    dispatch(addContact(values));
     actions.resetForm();
   };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -65,9 +68,8 @@ const ContactForm = () => {
           name="number"
           component="span"
         />
-
         <button className={CSS.btn} type="submit">
-          Add contact 📌
+          Add contact 📌{' '}
         </button>
       </Form>
     </Formik>

@@ -1,16 +1,17 @@
-
 import { useDispatch, useSelector } from 'react-redux';
 import CSS from './SearchBar.module.css';
-import { setContactsFilter } from '../../redux/filterSlice.js';
-import { selectContactsFilter } from '../../redux/selectors.js';
+import { setContactsFilter } from '../../redux/filters/slice.js';
+import { selectContactsFilter } from '../../redux/filters/selectors.js';
 
+// Компонент відповідає за фільтрацію списку контактів за ім'ям
 const SearchBar = () => {
-  const dispatch = useDispatch();
-  const filter = useSelector(selectContactsFilter);
+  const dispatch = useDispatch(); // Отримуємо функцію dispatch з Redux для зміни фільтра
+  const filter = useSelector(selectContactsFilter); // Отримуємо поточне значення фільтра зі стану
 
+  // Обробник зміни значення фільтра
   const handleChangeFilter = ({ currentTarget: { value } }) => {
     const normalizedValue = value.toLowerCase();
-    dispatch(setContactsFilter(normalizedValue));
+    dispatch(setContactsFilter(normalizedValue)); // Викликаємо дію, яка змінює значення фільтра в Redux store
   };
 
   return (
@@ -29,4 +30,3 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
-

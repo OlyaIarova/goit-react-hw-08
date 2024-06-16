@@ -24,22 +24,40 @@
 .button {
   position: absolute;
   right: 10px;
+  padding: 7px;
   top: 50%;
   transform: translateY(-50%);
   background-color: #d4f0eb;
-  border: none;
+
   font-size: 14px;
+  border-color: #27b8ad;
   border-radius: 10px;
+  color: #212121;
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .button:hover,
 .button:focus {
-  color: #212121;
   background-color: #27b8ad;
-   color: red;
-
+  color: red;
 }
-
+.btn {
+  padding: 7px;
+  background-color: #d4f0eb;
+  font-size: 14px;
+  margin: 0 auto;
+  display: block;
+  border-color: #27b8ad;
+  border-radius: 10px;
+  color: #212121;
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn:hover,
+.btn:focus {
+  scale: 1.1;
+  background-color: #27b8ad;
+  color: red;
+}
 .icon {
-    margin-right: 8px;
-    color: #27b8ad;
-  }
+  margin-right: 8px;
+  color: #27b8ad;
+}

@@ -22,8 +22,9 @@
 .btn {
   padding: 10px;
   background-color: #d4f0eb;
-  border: none;
+  border-color: #27b8ad;
   border-radius: 10px;
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .btn:hover,
 .btn:focus {

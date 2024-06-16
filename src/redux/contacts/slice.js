@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, removeContact } from './contactsOps';
+import { logOut } from '../auth/operations';
+import { fetchContacts, addContact, deleteContact } from './operations';
 
 const handlePending = state => {
   state.isLoading = true;
@@ -8,46 +9,50 @@ const handlePending = state => {
 const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
-  state.errorMsg = 'There are no contacts to show yet';
 };
 
 const contactsSlice = createSlice({
-  name: 'tasks',
+  name: 'contacts',
   initialState: {
+    // Початковий стан для slice contacts
     items: [],
-    isLoading: false,
+    loading: false,
     error: null,
-    errorMsg: null,
   },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, handlePending)
+      // Оновлення списку контактів
       .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.loading = false;
         state.error = null;
-        state.errorMsg = null;
         state.items = action.payload;
       })
       .addCase(fetchContacts.rejected, handleRejected)
       .addCase(addContact.pending, handlePending)
+      // Додавання нового контакту на початок списку контактів
       .addCase(addContact.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.loading = false;
         state.error = null;
-        state.errorMsg = null;
         state.items.push(action.payload);
       })
       .addCase(addContact.rejected, handleRejected)
-      .addCase(removeContact.pending, handlePending)
-      .addCase(removeContact.fulfilled, (state, action) => {
-        state.isLoading = false;
+      .addCase(deleteContact.pending, handlePending)
+      // Видалення контакту зі списку контактів
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.loading = false;
         state.error = null;
-        state.errorMsg = null;
         const index = state.items.findIndex(
           contact => contact.id === action.payload.id
         );
         state.items.splice(index, 1);
       })
-      .addCase(removeContact.rejected, handleRejected);
+      .addCase(deleteContact.rejected, handleRejected)
+      .addCase(logOut.fulfilled, state => {
+        state.items = [];
+        state.error = null;
+        state.loading = false;
+      });
   },
 });
 
